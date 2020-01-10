@@ -42,7 +42,7 @@ const Header = ({ currentUser, hidden, signOutStart }) => (
 );
 
 const mapDispatchToProps = dispatch => ({
-  signOutStart: () => dispatch(signOutStart())
+  signOutStart: () => dispatch(signOutStart()),
 });
 
 const mapStateToProps = createStructuredSelector({

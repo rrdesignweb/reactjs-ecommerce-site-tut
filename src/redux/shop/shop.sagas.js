@@ -1,4 +1,4 @@
-import { takeLatest, call, put } from "redux-saga/effects"; //take every non blocking call - keeps running async
+import { takeLatest, call, put, all } from "redux-saga/effects"; //take every non blocking call - keeps running async
 import ShopActionTypes from "./shop.types";
 
 import {
@@ -12,7 +12,6 @@ import {
 } from "./shop.action";
 
 export function* fetchCollectionsAsync() {
-  yield console.log("I am fired");
 
   const collectionRef = firestore.collection("collections");
 
@@ -34,4 +33,8 @@ export function* fetchCollectionsStart() {
     ShopActionTypes.FETCH_COLLECTIONS_START,
     fetchCollectionsAsync
   );
+}
+
+export function* shopSagas() {
+  yield all([call(fetchCollectionsStart)])
 }
