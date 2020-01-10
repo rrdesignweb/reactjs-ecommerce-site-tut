@@ -23,7 +23,6 @@ class SignIn extends React.Component {
     const { email, password } = this.state;
 
     emailSignInStart(email, password);
-
   };
 
   handleChange = event => {

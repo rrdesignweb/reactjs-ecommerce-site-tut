@@ -12,7 +12,9 @@ const config = {
   appId: "1:706936750330:web:1aec53d21b303a7724c943"
 };
 
-//////// User Login ////////
+firebase.initializeApp(config);
+
+//////// User Creation ////////
 export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!userAuth) {
     return;
@@ -37,7 +39,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   }
   return userRef;
 };
-firebase.initializeApp(config);
+
 
 /////// Temp code to move data into firestore programmatically to use later (batch)
 export const addCollectionAndDocuments = async (
@@ -55,17 +57,6 @@ export const addCollectionAndDocuments = async (
   return await batch.commit();
 };
 
-////////
-export const auth = firebase.auth();
-
-////////
-export const firestore = firebase.firestore();
-
-export const googleProvider = new firebase.auth.GoogleAuthProvider();
-
-googleProvider.setCustomParameters({ prompt: "select_account" });
-export const signInWithGoogle = () => auth.signInWithPopup(googleProvider);
-
 //////// Shop Data ////////
 export const convertCollectionsSnapshotToMap = collections => {
   const transformedCollection = collections.docs.map(doc => {
@@ -82,7 +73,25 @@ export const convertCollectionsSnapshotToMap = collections => {
     result[item.title.toLowerCase()] = item;
     return result;
   }, {});
-
 };
+
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = auth.onAuthStateChanged(userAuth => {
+      unsubscribe();
+      resolve(userAuth);
+    }, reject);
+  });
+};
+
+////////
+export const auth = firebase.auth();
+////////
+export const firestore = firebase.firestore();
+
+
+export const googleProvider = new firebase.auth.GoogleAuthProvider();
+googleProvider.setCustomParameters({ prompt: "select_account" });
+export const signInWithGoogle = () => auth.signInWithPopup(googleProvider);
 
 export default firebase;
