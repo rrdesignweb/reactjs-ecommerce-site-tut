@@ -12,7 +12,6 @@ import {
 } from "./shop.action";
 
 export function* fetchCollectionsAsync() {
-
   const collectionRef = firestore.collection("collections");
 
   try {
