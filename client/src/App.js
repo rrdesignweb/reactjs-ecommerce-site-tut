@@ -13,16 +13,16 @@ import CheckoutPage from "./pages/checkout/checkout.component";
 
 import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component";
 
-import "./App.css";
+import { GlobalStyle } from "./global.styles";
 
 const App = ({ checkUserSession, currentUser }) => {
-
   useEffect(() => {
     checkUserSession();
   }, [checkUserSession]);
 
   return (
     <div className="App">
+      <GlobalStyle />
       <Header />
       <Switch>
         <Route exact path="/" component={Homepage} />
